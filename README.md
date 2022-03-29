@@ -100,3 +100,8 @@ npm install react-bootstrap@0
 npm install bootstrap@3
 ln -s ../node_modules/bootstrap/dist public/bootstrap
 ```
+
+### Google Map API Installation
+```
+npm install google-maps-react
+```
