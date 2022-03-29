@@ -88,7 +88,7 @@ npm install --save-dev webpack-hot-middleware@2
 ### Simple Routing
 ```
 cd ui
-npm install react-router-dom@4
+npm install react-router-dom@5.2.0
 ```
 
 Chapter 11: React-Bootstrap
