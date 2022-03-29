@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 
-import Contents from './Contents.jsx';
+import Content from './Content.jsx';
 
 function NavBar() {
   return (
@@ -24,7 +24,7 @@ function Page() {
   return (
     <div>
       <NavBar />
-      <Contents />
+      <Content />
     </div>
   );
 }
