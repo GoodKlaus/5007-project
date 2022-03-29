@@ -105,3 +105,7 @@ ln -s ../node_modules/bootstrap/dist public/bootstrap
 ```
 npm install google-maps-react
 ```
+Compile Command
+```
+npx webpack --mode production
+```
