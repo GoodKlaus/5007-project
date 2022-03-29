@@ -29,4 +29,4 @@ function Content() {
   );
 }
 
-export default withRouter(Contents);
+export default withRouter(Content);
