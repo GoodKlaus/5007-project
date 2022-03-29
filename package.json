@@ -1,0 +1,36 @@
+{
+  "name": "chargingdoor-5007-project",
+  "version": "1.0.0",
+  "description": "chargingdoor - A web platform for shared charging pile of electric vehicles",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -w server server/server.js",
+    "compile": "babel src --out-dir public",
+    "watch": "babel src --out-dir public --watch --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WangTao And Zhu HaoYu",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.17.3",
+    "http-proxy-middleware": "^0.21.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "nodemon": "^2.0.15",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoodKlaus/5007-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GoodKlaus/5007-project/issues"
+  },
+  "homepage": "https://github.com/GoodKlaus/5007-project#readme"
+}
