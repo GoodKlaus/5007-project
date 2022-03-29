@@ -46,5 +46,5 @@ export class Home extends React.Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: ('AIzaSyBKEEQ4HcGDKPwClXap5h9Cjqf7S2yfp9o')
+    apiKey: ('')
 })(Home);
