@@ -13,32 +13,15 @@ npm init
 npm install express@4
 ```
 
-### JSX Transform
-```
-npm install --save-dev @babel/core@7 @babel/cli@7
-node_modules/.bin/babel --version
-npx babel --version
-npm install --save-dev @babel/preset-react@7
-npx babel src --presets @babel/react --out-dir public
-```
-
 ### Automate
 ```
 npm install nodemon@1
-```
-
-### Mulitple Environments
-```
-cd ui
-npm install dotenv@6
 ```
 
 ### Front-end Modules and Webpack
 ```
 cd ui
 npm install --save-dev webpack@4 webpack-cli@3
-npx webpack public/App.js --output public/app.bundle.js
-npx webpack public/App.js --output public/app.bundle.js --mode development
 ```
 
 ### Transform and Bundle
@@ -52,9 +35,6 @@ npx webpack
 ```
 cd ui
 npm install react@16 react-dom@16
-npm install prop-types@15
-npm install whatwg-fetch@3
-npm install babel-polyfill@6
 ```
 
 ### Hot Module Replacement
@@ -86,4 +66,9 @@ npm install google-maps-react
 # Compile Command
 ```
 npx webpack --mode production
+```
+
+# Run Command
+```
+node uiserver.js
 ```
