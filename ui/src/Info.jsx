@@ -42,10 +42,10 @@ function Detail(props) {
     let ind_curr = parseInt(location.state.ind_curr);
 
     return (
-        <div>
-            <div class="text_left"><h2>Address: {location.state.result.address[ind_curr]}</h2></div>
-            <div class="text_right"><h2>Distance: {location.state.result.distance[ind_curr]} km</h2></div>
-            <h2 class="price">Price: S$ {props.price}/hour</h2>
+        <div className='detail'>
+            <div className="text_left"><h3>Address: {location.state.result.address[ind_curr]}</h3></div>
+            <div className="text_right"><h3>Distance: {location.state.result.distance[ind_curr]} km</h3></div>
+            <h3 className="price">Price: S$ {props.price}/hour</h3>
         </div>
     );
 }
@@ -56,8 +56,14 @@ function Submission(props) {
     let ind_curr = parseInt(location.state.ind_curr);
     
     return (
-        <Button onClick={()=>props.handlePush(history, location, ind_curr)}>Submit</Button>
+        <Button type="submit" onClick={()=>props.handlePush(history, location, ind_curr)}>Submit</Button>
     );
+}
+function refresh(hist, loc) {
+    hist.replace('/reload');
+    setTimeout(()=>{
+        hist.replace({pathname:'/info', state:{result: loc.state.result, ind_curr: loc.state.ind_curr}});
+    })
 }
 
 export default class InfoDetail extends React.Component {
@@ -66,6 +72,7 @@ export default class InfoDetail extends React.Component {
         this.state = {info: 
             {timetable: tt, days: [true,false,false,false,false,false,false]},
             time_sel: " ",
+            duration: 1,
             price: 20,
             date_sel: false
         };
@@ -97,16 +104,20 @@ export default class InfoDetail extends React.Component {
     }
 
     handlePush(history, location, ind_curr) {
-        var now = new Date();
-        const date_now = (now.getDate()) + '/' + (now.getMonth()+1) + '/' + now.getFullYear();
-
-        history.push({pathname: "/summary", state: {
-            address: location.state.result.address[ind_curr],
-            price: this.state.price,
-            timing: this.state.time_sel,
-            duration: this.state.duration,
-            date: (!this.state.date_sel) ? date_now : this.state.date_sel
-        }});
+        if (this.state.time_sel != " ") {
+            var now = new Date();
+            const date_now = (now.getDate()) + '/' + (now.getMonth()+1) + '/' + now.getFullYear();
+            history.push({pathname: "/summary", state: {
+                address: location.state.result.address[ind_curr],
+                price: this.state.price,
+                timing: this.state.time_sel,
+                duration: this.state.duration,
+                date: (!this.state.date_sel) ? date_now : this.state.date_sel
+            }});
+        } else {
+            alert("You MUST select a charging time");
+                refresh(history, location);
+            } 
     }
 
     render() {
@@ -116,8 +127,8 @@ export default class InfoDetail extends React.Component {
         return (
             <div>
             <Detail price={this.state.price}/>
-            <h2>Vancant Timing</h2>
             <div id="nav_div">
+            <h3 style={{textAlign:'center'}}>Vancant Timing</h3>
             <ul id="nav">
                 <li><a onClick={()=>this.show(0)}>Today</a></li>
                 <li><a onClick={()=>this.show(1)}>{days[(now.getDay()+1)%7]}</a></li>
@@ -127,25 +138,27 @@ export default class InfoDetail extends React.Component {
                 <li><a onClick={()=>this.show(5)}>{days[(now.getDay()+5)%7]}</a></li>
                 <li><a onClick={()=>this.show(6)}>{days[(now.getDay()+6)%7]}</a></li>
             </ul>
-            </div>
             <TimeTable info={this.state.info} handleClick={this.handleClick}/>
-            <Form>
-                <FormGroup row>
-                    <ControlLabel>Your Selected Time: {this.state.time_sel}</ControlLabel>
+            </div>
+            <Form horizontal className='info_form'>
+                <FormGroup>
+                    <Col sm={4}><h4>Your Selected Time:</h4></Col>
+                    <Col sm={6}><h4>{this.state.time_sel}</h4></Col>
                 </FormGroup>
-                <FormGroup row>
-                    <ControlLabel>Your Charging Duration: </ControlLabel>
+                <FormGroup>
+                    <Col sm={4}><h4>Your Charging Duration:</h4></Col>
+                    <Col sm={6}>
                     <FormControl componentClass="select" onChange={this.handleChange}>
-                        <option value={0}>0</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
                         <option value={4}>4</option>
                         <option value={5}>5</option>
                     </FormControl>
+                    </Col>
                 </FormGroup>
-                <FormGroup check row>
-                    <Col sm={{offset: 2,size: 10}}>
+                <FormGroup>
+                    <Col smOffset={4} sm={6}>
                         <Submission handlePush={this.handlePush}/>
                     </Col>
                 </FormGroup>
