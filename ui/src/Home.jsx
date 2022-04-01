@@ -32,13 +32,14 @@ export class Home extends React.Component {
     }
 
     render() {
-            
+        const style = { width: '100%', height: '600px' };
+
         return (
             <React.Fragment>
-                <div>
+                <div className='home_back'>
                     <h2 id="text_home">Where to Charge</h2>
                     <Search handleChange={this.handleChange} area={this.state.area}/>
-                    <Map google={this.props.google} initialCenter={{lat:1.3521,lng:103.8198}} />
+                    <Map google={this.props.google} initialCenter={{lat:1.3521,lng:103.8198}} style={style}/>
                 </div>
             </React.Fragment>
         );
