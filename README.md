@@ -72,3 +72,5 @@ npx webpack --mode production
 ```
 node uiserver.js
 ```
+
+### Note: Without backend server for now, all the information (address, timing, etc.) are hard-coded.
