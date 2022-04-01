@@ -7,7 +7,7 @@ function NavBar() {
   return (
     <nav>
         <ul>
-            <li><img src="logo.png" alt="logo"  width="100" height="50"></img></li>
+            <li><img src="logo.png" alt="logo"  width="80" height="60"></img></li>
             <li><h3>Charging Door</h3></li>
             <li><NavLink exact to="/home">Home</NavLink></li>
             <li><NavLink to="/aboutUs">About Us</NavLink></li>
@@ -23,9 +23,9 @@ function NavBar() {
 function Page() {
   return (
     <React.Fragment>
-    <div>
-      <NavBar />
-      <Content />
+    <div className = "page">
+      <header><NavBar /></header>
+      <div className = "content"><Content /></div>
     </div>
     <footer>
 		    <small><i>Copyright &copy; <strong>ChargingDoor</strong><br></br><a href="mailto:Charging@Door.com">Charging@Door</a>

@@ -22,8 +22,15 @@ function Search(props) {
 export class Home extends React.Component {
     constructor() {
         super();
-        this.state = {area: " "};
+        this.state = {area: " ", lat: 0, lon: 0};
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    async componentDidMount() {
+        await navigator.geolocation.getCurrentPosition(
+            position => this.setState({lat: position.coords.latitude, lon: position.coords.longitude}),
+            err => console.log(err)
+        );
     }
 
     handleChange(e) {
@@ -39,7 +46,7 @@ export class Home extends React.Component {
                 <div className='home_back'>
                     <h2 id="text_home">Where to Charge</h2>
                     <Search handleChange={this.handleChange} area={this.state.area}/>
-                    <Map google={this.props.google} initialCenter={{lat:1.3521,lng:103.8198}} style={style}/>
+                    <Map google={this.props.google} center={{lat: this.state.lat, lng: this.state.lon}} style={style}><Marker key={"Current Location"} position={{lat: this.state.lat, lng: this.state.lon}} /></Map>
                 </div>
             </React.Fragment>
         );
@@ -47,5 +54,5 @@ export class Home extends React.Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: ('')
+    apiKey: ('AIzaSyBKEEQ4HcGDKPwClXap5h9Cjqf7S2yfp9o')
 })(Home);

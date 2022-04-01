@@ -5,7 +5,9 @@ export default class Register extends React.Component {
     render() {
         return (
             <React.Fragment>
-              <h1>Login your account</h1>
+             <div className='login_content'>
+
+              <h2>Login</h2>
                 <form name="loginForm">
                     <label style={{width:"150px", textAlign:"left", display:"inline-block"}}>Email/Phone Number:</label>
                     <input type="text" name="EmailOrTelephone" placeholder="Please enter Email/ Phone Number" />
@@ -15,7 +17,7 @@ export default class Register extends React.Component {
                     <br/><br/>
                     <button>Login</button>
                 </form>
-
+                </div>
               </React.Fragment>
         );
     }

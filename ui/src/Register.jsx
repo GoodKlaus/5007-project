@@ -5,7 +5,8 @@ export default class Register extends React.Component {
     render() {
         return (
             <React.Fragment>
-              <h1>Register</h1>
+              <div className='register_content'>
+              <h2>Register</h2>
                <form name="registerForm" onSubmit={this.handleSubmit}>
                     <label style={{width:"150px", textAlign:"left", display:"inline-block"}}>Name:</label>
                     <input type="text" name="Name" placeholder="Please enter user name" />
@@ -33,6 +34,7 @@ export default class Register extends React.Component {
                     
                     <button>Sign up</button>
                </form>
+               </div>
 
               </React.Fragment>
         );

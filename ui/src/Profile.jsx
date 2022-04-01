@@ -5,8 +5,9 @@ export default class Register extends React.Component {
     render() {
         return (
             <React.Fragment>
-              <h1>Profile</h1>
-               <form name="registerForm" onSubmit={this.handleSubmit}>
+              <div className='profile_content'>
+              <h2>Profile</h2>
+                <form name="registerForm" onSubmit={this.handleSubmit}>
                     <label style={{width:"150px", textAlign:"left", display:"inline-block"}}>Name:</label>
                     <label>Zhu Haoyu</label>
                     <br/><br/>
@@ -31,9 +32,8 @@ export default class Register extends React.Component {
                     <label>From 2:00 pm   to   8:00 pm   Weekdays </label>
                     <br/><br/>
                     
-                    <button>Sign up</button>
-               </form>
-
+                </form>
+               </div>
               </React.Fragment>
         );
     }
