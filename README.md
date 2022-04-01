@@ -73,4 +73,4 @@ npx webpack --mode production
 node uiserver.js
 ```
 
-### Note: Without backend server for now, all the information (address, timing, etc.) are hard-coded.
+### Note: Without backend server for now, all the information (address, timing, etc.) are hard-coded. And the Google Map search is not utilized.
