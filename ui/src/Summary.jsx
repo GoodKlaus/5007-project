@@ -42,9 +42,11 @@ export default class Summary extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <h2>Your Booking Summary</h2>
+                <h2 style={{textAlign: "center"}}>Your Booking Summary</h2>
                 <BookingSum />
+                <div className='button_pay'>
                 <Button className="pay">Proceed to Pay</Button>
+                </div>
             </React.Fragment>
         );
     }
