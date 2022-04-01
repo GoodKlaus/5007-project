@@ -22,10 +22,16 @@ function NavBar() {
 
 function Page() {
   return (
+    <React.Fragment>
     <div>
       <NavBar />
       <Content />
     </div>
+    <footer>
+		    <small><i>Copyright &copy; <strong>ChargingDoor</strong><br></br><a href="mailto:Charging@Door.com">Charging@Door</a>
+		    </i></small>
+	  </footer>
+    </React.Fragment>
   );
 }
 
