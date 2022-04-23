@@ -1,0 +1,40 @@
+scalar GraphQLDate
+
+type user {
+  _id: ID!
+  id: Int!
+  name: String!,
+  email: String!,
+  phoneNumber:String!,
+  created: GraphQLDate!,
+  isOwnerOfEV: Boolean!,
+  addressOfPile: String,
+  price: Double,
+  availableTime: String,
+}
+
+"Toned down Issue, used as inputs, without server generated values."
+input userRegisterInput {
+  name: String!,
+  email: String!,
+  phoneNumber:String!,
+  password: String!,
+  isOwnerOfEV: Boolean!,
+  addressOfPile: String,
+  price: Double,
+  availableTime: String,
+}
+input userLoginInput {
+  email: String,
+  phoneNumber:String,
+  password: String!,
+}
+##### Top level declarations
+type Query {
+  about: String!
+  getUser(userInput:userLoginInput!): user
+}
+type Mutation {
+  setAboutMessage(message: String!): String
+  registerNewUser(userInput: userRegisterInput!): user!
+}
