@@ -35,6 +35,8 @@ db.counters.remove({ _id: 'users' });
 db.counters.insert({ _id: 'users', current: count });
 
 db.users.createIndex({ id: 1 }, { unique: true });
-db.users.createIndex({ status: 1 });
-db.users.createIndex({ owner: 1 });
+db.users.createIndex({ name: 1 });
+db.users.createIndex({ email: 1 }, { unique: true });
+db.users.createIndex({ phoneNumber: 1 }, { unique: true });
+db.users.createIndex({ price: 1 });
 db.users.createIndex({ created: 1 });

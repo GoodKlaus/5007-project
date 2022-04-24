@@ -9,7 +9,7 @@ type user {
   created: GraphQLDate!,
   isOwnerOfEV: Boolean!,
   addressOfPile: String,
-  price: Double,
+  price: Float,
   availableTime: String,
 }
 
@@ -21,7 +21,7 @@ input userRegisterInput {
   password: String!,
   isOwnerOfEV: Boolean!,
   addressOfPile: String,
-  price: Double,
+  price: Float,
   availableTime: String,
 }
 input userLoginInput {
