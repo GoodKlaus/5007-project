@@ -1,19 +1,29 @@
 {
   "name": "ui",
   "version": "1.0.0",
-  "description": "",
   "main": "uiserver.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "#start": "UI server. HMR is enabled in dev mode.",
+    "start": "nodemon -w uiserver.js -w .env uiserver.js",
+    "#lint": "Runs ESLint on all relevant files",
+    "lint": "eslint . --ext js,jsx --ignore-pattern public",
+    "#compile": "Generates JS bundles for production. Use with start.",
+    "compile": "webpack --mode production",
+    "#watch": "Compile, and recompile on any changes.",
+    "watch": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^2.25.3",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.4.1",
     "dotenv": "^6.2.0",
+    "dotenv-webpack": "^1.5.5",
     "express": "^4.17.3",
     "google-maps-react": "^2.0.6",
+    "graphql": "^0.13.2",
+    "http-proxy-middleware": "^0.21.0",
     "nodemon": "^2.0.15",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
@@ -23,11 +33,16 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-cli": "^6.26.0",
     "babel-loader": "^8.2.4",
-    "webpack": "^4.46.0",
+    "webpack": "^5.70.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.3",
     "webpack-hot-middleware": "^2.25.1"
-  }
+  },
+  "description": ""
 }
