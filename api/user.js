@@ -25,6 +25,13 @@ async function getUser(_, { userInput }) {
 async function registerNewUser(_, { userInput }) {
   const db = getDb();
 // if duplicate, will not insert but count increse, should solve
+const checkEmailIfExsisted = await db.collection('users').findOne({email:userInput.email});
+const checkPhoneNumberIfExsisted = await db.collection('users').findOne({phoneNumber:userInput.phoneNumber});
+console.log(checkEmailIfExsisted,checkPhoneNumberIfExsisted)
+if(checkEmailIfExsisted || checkPhoneNumberIfExsisted){
+  return null;
+}
+
   const newUser = Object.assign({}, userInput);
   newUser.created = new Date();
   newUser.id = await getNextSequence('users');

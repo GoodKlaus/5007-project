@@ -36,5 +36,5 @@ type Query {
 }
 type Mutation {
   setAboutMessage(message: String!): String
-  registerNewUser(userInput: userRegisterInput!): user!
+  registerNewUser(userInput: userRegisterInput!): user
 }
