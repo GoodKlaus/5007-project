@@ -21,7 +21,7 @@ export default class Content extends React.Component {
         <Route path="/home" component={Home} />
         <Route path="/results" component={Results} />
         <Route path="/info" component={InfoDetail} />
-        <Route path="/summary" component={Summary} />
+        <Route path="/summary" component={Summary} render={(props) => <Summary {...props} isLogined = {this.props.isLogined}/>}/>
         <Route path="/aboutUs" component={AboutUs} />
         <Route path="/login"  render={(props) => <Login {...props} isLogined = {this.props.isLogined} 
               setLoginInfo = {this.props.setLoginInfo}  setLoginStatus = {this.props.setLoginStatus} 
@@ -29,7 +29,7 @@ export default class Content extends React.Component {
               
         <Route path="/register" render={(props) => <Register {...props} isLogined = {this.props.isLogined}
               setLoginStatus = {this.props.setLoginStatus} setLoginInfo = {this.props.setLoginInfo} 
-              addNewUser = {this.props.addNewUser}/>}/>
+              addNewUser = {this.props.addNewUser} addNewUserCharger={this.props.addNewUserCharger}/>}/>
         
         <Route path="/profile" render={(props) => <Profile {...props} LoginedUser = {this.props.LoginedUser}
               isLogined = {this.props.isLogined} setLoginStatus = {this.props.setLoginStatus}
