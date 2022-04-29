@@ -5,15 +5,22 @@ const { ApolloServer } = require('apollo-server-express');
 const GraphQLDate = require('./graphql_date.js');
 const about = require('./about.js');
 const user = require('./user.js');
+const target = require('./target.js');
 
 const resolvers = {
   Query: {
     about: about.getMessage,
     getUser: user.getUser,
+    getUserCharger: user.getUserCharger,
+    resultTarget: target.result,
+    userChargerList: user.result,
   },
   Mutation: {
     setAboutMessage: about.setMessage,
     registerNewUser: user.registerNewUser,
+    registerNewUserCharger: user.registerNewUserCharger,
+    targetAdd: target.add,
+    userTimeChange: user.change,
   },
   GraphQLDate,
 };
