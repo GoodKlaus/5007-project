@@ -31,7 +31,7 @@ export default class Login extends React.Component {
                 this.props.setLoginInfo(loginInfo);
                 this.props.setLoginStatus(true)
             }else{
-                alert("error user information or password")
+                alert("We could not find your account")
             }
         }
         if(loginInfo.length != 0 ){
@@ -58,7 +58,7 @@ export default class Login extends React.Component {
                         <input type="text" name="EmailOrTelephone" placeholder="Please enter Email/ Phone Number" />
                         <br/><br/>
                         <label style={{width:"150px", textAlign:"left", display:"inline-block"}}>Password: </label>
-                        <input type="text" name="Password" placeholder="Please enter password" />
+                        <input type="password" name="Password" placeholder="Please enter password" />
                         <br/><br/>
                         <button>Login</button>
                     </form>
