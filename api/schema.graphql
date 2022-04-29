@@ -3,38 +3,93 @@ scalar GraphQLDate
 type user {
   _id: ID!
   id: Int!
+  name: String!
+  email: String!
+  phoneNumber:String!
+  created: GraphQLDate!
+  isOwnerOfEVCharger: Boolean!
+}
+
+type userCharger {
+  _id: ID!
+  id: Int!
+  name: String!
+  email: String!
+  phoneNumber:String!
+  created: GraphQLDate!
+  isOwnerOfEVCharger: Boolean!
+  addressOfPile: String
+  lat: Float!
+  lon: Float!
+  price: Float
+  availableTime: [String]
+  availableTimeDisplay: [String]
+  availableTimeTable: [[String]]
+  startTime: Int
+  endTime: Int
+}
+
+type Target {
+    _id: ID!
+    id: Int!
+    address: String!
+    lat: Float!
+    lon: Float!
+}
+
+input TargetInputs {
+  address: String!
+  lat: Float!
+  lon: Float!
+}
+
+input TimeChangeInputs {
+  id: Int!
+  days_index: Int!
+  selectedTime: String!
+  duration: Int!
+}
+
+input userChargerRegisterInput {
   name: String!,
   email: String!,
   phoneNumber:String!,
-  created: GraphQLDate!,
-  isOwnerOfEV: Boolean!,
-  addressOfPile: String,
-  price: Float,
-  availableTime: String,
+  password: String!,
+  isOwnerOfEVCharger: Boolean!,
+  addressOfPile: String!,
+  price: Float!,
+  startTime: Int!,
+  endTime: Int!,
+  lat: Float!,
+  lon: Float!,
 }
 
-"Toned down Issue, used as inputs, without server generated values."
 input userRegisterInput {
   name: String!,
   email: String!,
   phoneNumber:String!,
   password: String!,
-  isOwnerOfEV: Boolean!,
-  addressOfPile: String,
-  price: Float,
-  availableTime: String,
+  isOwnerOfEVCharger: Boolean!,
 }
+
 input userLoginInput {
   email: String,
   phoneNumber:String,
   password: String!,
 }
+
 ##### Top level declarations
 type Query {
   about: String!
   getUser(userInput:userLoginInput!): user
+  getUserCharger(userInput:userLoginInput!): userCharger
+  resultTarget: Target!
+  userChargerList: [userCharger!]!
 }
 type Mutation {
   setAboutMessage(message: String!): String
   registerNewUser(userInput: userRegisterInput!): user
+  registerNewUserCharger(userChargerInput: userChargerRegisterInput!): userCharger
+  targetAdd(target: TargetInputs!): Target!
+  userTimeChange(changes: TimeChangeInputs!): userCharger!
 }
