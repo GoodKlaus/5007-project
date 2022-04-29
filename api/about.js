@@ -1,4 +1,4 @@
-let aboutMessage = 'Charging Door API v1.0';
+let aboutMessage = 'ChargingDoor Internal Syatem';
 
 function setMessage(_, { message }) {
   aboutMessage = message;
