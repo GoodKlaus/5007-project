@@ -1,91 +1,220 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { useHistory } from 'react-router-dom';
+// import URLSearchParams from 'url-search-params';
+import { Route } from 'react-router-dom';
+import Geocode from "react-geocode";
 
-import graphQLFetch from './graphQLFetch.js'
+Geocode.setApiKey('AIzaSyBKEEQ4HcGDKPwClXap5h9Cjqf7S2yfp9o');
+Geocode.enableDebug();
 
-const initAddress = ["Jurong Gateway", "Pandan Garden", "31 Jurong East Avenue"];
-const initDistance = [0.5, 1.2, 1.7];
-const initVacancy = [['Today', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'],
-                      ['Today', 'Wednesday', 'Thursday', 'Saturday', 'Sunday', 'Monday'],
-                      ['Today', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday']];
-
-function Result(props) {
-  let history = useHistory();
-
-  function handlePush() {
-    history.push({pathname: "/info", state: {address: props.users[props.ind].addressOfPile, price: props.users[props.ind].price, dist: props.dist, ind_curr: props.ind}});
-  }
-
-  return  (
-    <div className="result" onClick={handlePush}>
-          <div className="text_left"><h4>Address: {props.users[props.ind].addressOfPile}</h4></div>
-          <div className="text_right"><h4>Distance: {props.dist}km</h4></div>
-          <h4 className="vacant_time">Vacant Time: {props.users[props.ind].availableTimeDisplay.map(t => <span>{t}</span>).reduce((prev, curr) => [prev, ', ', curr])}</h4>
-    </div>
-  );
-}
-
-export default class Results extends React.Component {
-  constructor() {
-    super();
-    this.state = { target: [], users: [], result: {
-      address: initAddress, distance: initDistance, vacancy: initVacancy}};
-  }
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  async loadData() {
-    const query = `query {
-      resultTarget {
-        id address lat lon
-      }
-      userChargerList {
-        id addressOfPile lat lon price availableTimeDisplay
-      }
-    }`;
-    const data = await graphQLFetch(query);
-    if (data) {
-      this.setState({ target: data.resultTarget, users: data.userChargerList });
+export default class Register extends React.Component {
+    constructor(){
+        super();
+        this.state = {lat: 0.0, lon: 0.0};
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getcoor = this.getcoor.bind(this);
     }
-  }
-
-  distance(lat1, lat2, lon1, lon2) {
-    const R = 6371;
-    var latDistance = (lat2 - lat1) * Math.PI / 180.0;
-    var lonDistance = (lon2 - lon1) * Math.PI / 180.0;
-    var a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) 
-              + Math.cos(lat1*Math.PI/180.0) * Math.cos(lat2*Math.PI/180.0) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var distance = R * c;
-    let height = 0;
-    distance = Math.pow(distance, 2) + Math.pow(height, 2);
-    return Math.sqrt(distance);
-  }
-
-  render() {
-    const user_lst = this.state.users;
-    const temp_dist = [];
-    for (var i=0; i<user_lst.length; i++) {
-      var temp = this.distance(this.state.target.lat, this.state.users[i].lat, this.state.target.lon, this.state.users[i].lon);
-      temp_dist.push([temp.toFixed(2), i]);
+    getcoor() {
+        const address = document.forms.registerForm.PileAddress.value;
+        Geocode.fromAddress(address).then(
+            (response) => {
+                const lat_new = response.results[0].geometry.location.lat;
+                const lng = response.results[0].geometry.location.lng;
+                this.setState({lat: lat_new, lon: lng});
+            },
+              (error) => {
+                console.error(error);
+            }
+        )
     }
-    temp_dist.sort();
 
-    var results= [];
-    for (var j=0; j<temp_dist.length; j++) {
-      results.push(<Result users={this.state.users} dist={temp_dist[j][0]} ind={j}/>);
-    }
+    handleSubmit(e) {
+        e.preventDefault();
+        const form = document.forms.registerForm;
+        const name = form.Name.value;
+        const email = form.Email.value;
+        const phoneNumber = form.PhoneNumber.value;
+        const password = form.Password.value;
+        const isOwnerOfEVCharger = form.IsOwnerOfEVCharger.checked;
+
+        let pileAddress = isOwnerOfEVCharger? form.PileAddress.value:"";
+        if(isOwnerOfEVCharger) {
+            this.getcoor(pileAddress);
+        }
+        let price = isOwnerOfEVCharger? parseFloat(form.Price.value):0;
+        let start = parseInt(form.TimeStart.value);
+        let end = parseInt(form.TimeEnd.value);
+        if(!(/^([a-zA-Z ]){2,30}$/.test(name))) {
+            alert("Name can only accept alphabets and space character (2 - 30 characters) ")
+        }else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+            alert("Please enter correctly formatted email ")
+        }else if(!(/^\d{8}$/.test(phoneNumber))){
+            alert("Please enter 8-digit phoneNumber ")
+        }else if(!(/^\w\w{7,11}$/.test(password))){
+            alert("Password should be 8-12 alphabets or digits")
+        }else{
+            if(isOwnerOfEVCharger){
+                if(!pileAddress){
+                    alert("pileAddress can not be empty ")
     
-    return (
-      <React.Fragment>
-        <div className='result_content'>
-        <h2 style={{color: "#283292"}}>Charging at: {this.state.target.address}</h2>
-        {results}
-        </div>
-      </React.Fragment>
-    );
-  }
+                }else if(!price){
+                    alert("price should be number ")
+                }else if(start >= end){
+                    alert("Please fill in correct available time format ")
+                } else {
+                        console.log(this.state.lat);
+                        const registerUserCharger = {
+                            name: name,
+                            email: email,
+                            phoneNumber:phoneNumber,
+                            password:password,
+                            isOwnerOfEVCharger: isOwnerOfEVCharger,
+                            addressOfPile: pileAddress,
+                            price: price,
+                            startTime: start,
+                            endTime: end,
+                            lat: this.state.lat,
+                            lon: this.state.lon,
+                        };
+                        const register = async () => {
+                            const registedUserCharger = await this.props.addNewUserCharger(registerUserCharger)
+                            if(!registedUserCharger){
+                                alert("The email or phoneNumber has been registered.")
+                            }else{
+                                this.props.setLoginInfo({email:registerUserCharger.email,password:registerUserCharger.password, isOwnerOfEVCharger: registerUserCharger.isOwnerOfEVCharger});
+                                this.props.setLoginStatus(true)
+                            }
+                        }
+                        register();
+                }
+            } else {
+                const registerUser = {
+                    name: name,
+                    email: email,
+                    phoneNumber:phoneNumber,
+                    password:password,
+                    isOwnerOfEVCharger: isOwnerOfEVCharger,
+                };
+                console.log(registerUser)
+                const register = async () => {
+                    const registedUser = await this.props.addNewUser(registerUser)
+                    if(!registedUser){
+                        alert("The email or phoneNumber has been registered.")
+                    }else{
+                        this.props.setLoginInfo({email:registerUser.email,password:registerUser.password, isOwnerOfEVCharger: registerUserCharger.isOwnerOfEVCharger});
+                        this.props.setLoginStatus(true)
+                    }
+                }
+                register();
+            }
+        }
+    }
+    render() {
+        if(this.props.isLogined) {
+            return (
+                <React.Fragment>
+                    <h3>Hi! You has registered a new account. Welcome to Charging Door! :) </h3>
+                </React.Fragment>
+            );
+        }else{
+            return (
+                <React.Fragment>
+                <div className='register_content'>
+                <h2>Register</h2>
+                <form name="registerForm" onSubmit={this.handleSubmit}>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Name:</label>
+                        <input type="text" name="Name" placeholder="name" /><label style={{color :"red",fontSize:18}}>*</label>
+                        <br/><br/>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Email:</label>
+                        <input type="text" name="Email" placeholder="email with correct format" />
+                        <label style={{color :"red",fontSize:18}}>*</label>
+                        <br/><br/>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Phone Number: </label>
+                        <input type="text" name="PhoneNumber" placeholder="8-digit phone number" />
+                        <label style={{color :"red",fontSize:18}}>*</label>
+                        <br/><br/>
+
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Password: </label>
+                        <input type="text" name="Password" placeholder="password" />
+                        <label style={{color :"red",fontSize:18}}>*</label> 
+                        <br/><br/>
+
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Is a Owner of EV Charger </label>
+                        <input type="checkbox" name="IsOwnerOfEVCharger" style={{width:"15px",height:"15px"}}/>
+                        <label style={{color :"red",fontSize:18}}>*</label>
+                        <br/><br/>
+
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Address of Pile: </label>
+                        <input type="text" name="PileAddress" placeholder="Please enter the address" />
+                        <br/><br/>
+                        <button onClick={this.getcoor} style={{width:"auto", marginRight:"10px"}}>Obtain Coordinates</button>
+                        <label style={{width:"auto", textAlign:"left", display:"inline-block", color:"red"}}>Coordinates: ({this.state.lat}, {this.state.lon}) </label>
+                        <br/><br/>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Price: </label>
+                        <input type="text" name="Price" placeholder="S$ price /hour" />
+                        <br/><br/>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Time Available - Start (Everyday): </label>
+                        <select name="TimeStart">
+                            <option value="0">00:00</option>
+                            <option value="1">01:00</option>
+                            <option value="2">02:00</option>
+                            <option value="3">03:00</option>
+                            <option value="4">04:00</option>
+                            <option value="5">05:00</option>
+                            <option value="6">06:00</option>
+                            <option value="7">07:00</option>
+                            <option value="8">08:00</option>
+                            <option value="9">09:00</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                            <option value="17">17:00</option>
+                            <option value="18">18:00</option>
+                            <option value="19">19:00</option>
+                            <option value="20">20:00</option>
+                            <option value="21">21:00</option>
+                            <option value="22">22:00</option>
+                            <option value="23">23:00</option>
+                        </select>
+                        <br/><br/>
+                        <label style={{width:"200px", textAlign:"left", display:"inline-block"}}>Time Available - End (Everyday): </label>
+                        <select name="TimeEnd">
+                            <option value="0">00:00</option>
+                            <option value="1">01:00</option>
+                            <option value="2">02:00</option>
+                            <option value="3">03:00</option>
+                            <option value="4">04:00</option>
+                            <option value="5">05:00</option>
+                            <option value="6">06:00</option>
+                            <option value="7">07:00</option>
+                            <option value="8">08:00</option>
+                            <option value="9">09:00</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                            <option value="17">17:00</option>
+                            <option value="18">18:00</option>
+                            <option value="19">19:00</option>
+                            <option value="20">20:00</option>
+                            <option value="21">21:00</option>
+                            <option value="22">22:00</option>
+                            <option value="23">23:00</option>
+                        </select>
+                        <br/><br/>
+                        
+                        <button>Sign up</button>
+                </form>
+                </div>
+
+                </React.Fragment>
+            );
+        }
+    }
 }
