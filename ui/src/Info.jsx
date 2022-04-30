@@ -71,22 +71,25 @@ function Submission(props) {
 
         var selectionOK = true;
         var hours = [];
-        for (let i=0; i<props.duration+1; i++) {
+        const dt = props.duration;
+        for (let i=0; i-1<dt; i++) {
             if(time_index+i>=tt_selected.length){
+                console.log("duration too long", i);
                 selectionOK = false;
                 break;
             }
             const colon_ind = tt_selected[time_index+i].indexOf(':');
             var temp_hour = parseInt(tt_selected[time_index+i].slice(0, colon_ind));
             if (i>0 && temp_hour-1>hours[i-1]) {
-                    selectionOK = false;
-                    break;
+                console.log("gap !!!");
+                selectionOK = false;
+                break;
             }
             hours.push(temp_hour);
         }
         console.log(selectionOK);
         if(!selectionOK){
-            alert("Your selection either exceeds owner's available time range or overlap booked timing, please select again");
+            // alert("Your selection either exceeds owner's available time range or overlap booked timing, please select again");
             refresh(history, location);
         }
     }
