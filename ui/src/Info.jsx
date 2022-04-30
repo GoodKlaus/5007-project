@@ -113,6 +113,7 @@ export default class InfoDetail extends React.Component {
             time_sel: " ",
             duration: 1,
             date_sel: false,
+            color_a: ["usual", "usual", "usual", "usual", "usual", "usual", "usual"],
         };
         this.show = this.show.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -144,8 +145,11 @@ export default class InfoDetail extends React.Component {
         var days_init = [false,false,false,false,false,false,false];
         const day_of_week = (now.getDay() + addition) % 7;
         days_init[day_of_week] = true;
+
+        var color_change = ["usual", "usual", "usual", "usual", "usual", "usual", "usual"];
+        color_change[addition] = "Change";
         
-        this.setState({days: days_init, days_index: addition, date_sel: date});
+        this.setState({color_a: color_change, days: days_init, days_index: addition, date_sel: date});
     }
 
     handleClick(t) {
@@ -191,13 +195,13 @@ export default class InfoDetail extends React.Component {
             <div id="nav_div">
             <h3 style={{textAlign:'center'}}>Vancant Timing</h3>
             <ul id="nav">
-                <li><a onClick={()=>this.show(0)}>Today</a></li>
-                <li><a onClick={()=>this.show(1)}>{days[1]}</a></li>
-                <li><a onClick={()=>this.show(2)}>{days[2]}</a></li>
-                <li><a onClick={()=>this.show(3)}>{days[3]}</a></li>
-                <li><a onClick={()=>this.show(4)}>{days[4]}</a></li>
-                <li><a onClick={()=>this.show(5)}>{days[5]}</a></li>
-                <li><a onClick={()=>this.show(6)}>{days[6]}</a></li>
+                <li  className={this.state.color_a[0]}><a onClick={()=>this.show(0)}>Today</a></li>
+                <li  className={this.state.color_a[1]}><a onClick={()=>this.show(1)}>{days[1]}</a></li>
+                <li  className={this.state.color_a[2]}><a onClick={()=>this.show(2)}>{days[2]}</a></li>
+                <li  className={this.state.color_a[3]}><a onClick={()=>this.show(3)}>{days[3]}</a></li>
+                <li  className={this.state.color_a[4]}><a onClick={()=>this.show(4)}>{days[4]}</a></li>
+                <li  className={this.state.color_a[5]}><a onClick={()=>this.show(5)}>{days[5]}</a></li>
+                <li  className={this.state.color_a[6]}><a onClick={()=>this.show(6)}>{days[6]}</a></li>
             </ul>
             <TimeTable users={this.state.users} days_index={this.state.days_index} handleClick={this.handleClick}/>
             </div>
