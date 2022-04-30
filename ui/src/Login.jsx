@@ -31,7 +31,7 @@ export default class Login extends React.Component {
                 this.props.setLoginInfo(loginInfo);
                 this.props.setLoginStatus(true)
             }else{
-                alert("We could not find your account")
+                alert("error user information or password")
             }
         }
         if(loginInfo.length != 0 ){
