@@ -158,6 +158,20 @@ Button:hover {
     border: none;
     border-bottom: 1px solid #ddd;
 }
+.coupon{
+    padding-top: 20px;
+    width: 150px;
+    margin: auto;
+}
+.buttom_addIcs {
+    padding-top: 20px;
+    width: 150px;
+    margin: auto;
+}
+.addIcs {
+    width: 150px;
+}
+
 .button_pay {
     padding-top: 20px;
     width: 150px;

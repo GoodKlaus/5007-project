@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import {useLocation, useHistory} from 'react-router-dom'
+import ICalendarLink from "react-icalendar-link";
 
 import graphQLFetch from './graphQLFetch.js'
 
@@ -48,6 +49,39 @@ function BookingSum() {
     );
 }
 
+function AddEventToCalender() {
+    let location = useLocation();
+    var time_start = location.state.timing;
+    const duration = location.state.duration;
+    var time_end = parseInt(time_start.split(':')[0]) + parseInt(duration) + ':'+ time_start.split(':')[1];
+    const dayPara =  location.state.date.split("/");
+    const year = dayPara[2];
+    const month = dayPara[1].length == 1? "0"+dayPara[1]:dayPara[1] ;
+    const day = dayPara[0].length == 1? "0"+dayPara[0]:dayPara[0] ;
+    const event = {
+        title: "Your EV Charging Booking",
+        description: "It's time to charge your car at the place you booked",
+        startTime:  year + "-"+month+"-"+day+"T"+time_start+":00+10:00",
+        endTime:    year + "-"+month+"-"+day+"T"+time_end+":00+10:00",
+        location: location.state.address,
+    
+        }
+        
+    return (
+        <div className='buttom_addIcs'>
+            <Button className="addIcs"> 
+                <ICalendarLink event={event}>
+                    Add to Calendar
+                </ICalendarLink>
+            </Button>
+        </div> 
+    
+    );
+}
+
+
+
+
 export default class Summary extends React.Component {
     constructor() {
         super();
@@ -55,6 +89,7 @@ export default class Summary extends React.Component {
     }
 
     async updateTime(){
+        console.log(this.props.isLogined)
         if(this.props.isLogined === false) {
             alert("You have not logged in, please log in before procedding!");
         } else {
@@ -73,14 +108,23 @@ export default class Summary extends React.Component {
         
     }
 
+
     render() {
         return (
             <React.Fragment>
                 <h2 style={{textAlign: "center"}}>Your Booking Summary</h2>
                 <BookingSum />
+                <div className='coupon'>
+                    <label style={{width:"100px", textAlign:"left", display:"inline-block"}}>Coupon Code:</label>
+                        <input type="text" name="Name" placeholder="mock coupon function" />
+                        <Button className="pay">Use Coupon</Button>
+                </div>
+
+
                 <div className='button_pay'>
                 <Button className="pay" onClick={this.updateTime}>Proceed to Pay</Button>
                 </div>
+                <AddEventToCalender/>
             </React.Fragment>
         );
     }

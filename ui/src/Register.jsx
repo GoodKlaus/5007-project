@@ -94,13 +94,12 @@ export default class Register extends React.Component {
                     password:password,
                     isOwnerOfEVCharger: isOwnerOfEVCharger,
                 };
-                console.log(registerUser)
                 const register = async () => {
                     const registedUser = await this.props.addNewUser(registerUser)
                     if(!registedUser){
                         alert("The email or phoneNumber has been registered.")
                     }else{
-                        this.props.setLoginInfo({email:registerUser.email,password:registerUser.password, isOwnerOfEVCharger: registerUserCharger.isOwnerOfEVCharger});
+                        this.props.setLoginInfo({email:registerUser.email,password:registerUser.password, isOwnerOfEVCharger: registerUser.isOwnerOfEVCharger});
                         this.props.setLoginStatus(true)
                     }
                 }

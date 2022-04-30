@@ -21,7 +21,7 @@ export default class Content extends React.Component {
         <Route path="/home" component={Home} />
         <Route path="/results" component={Results} />
         <Route path="/info" component={InfoDetail} />
-        <Route path="/summary" component={Summary} render={(props) => <Summary {...props} isLogined = {this.props.isLogined}/>}/>
+        <Route path="/summary" render={(props) => <Summary {...props} isLogined = {this.props.isLogined}/>}/>
         <Route path="/aboutUs" component={AboutUs} />
         <Route path="/login"  render={(props) => <Login {...props} isLogined = {this.props.isLogined} 
               setLoginInfo = {this.props.setLoginInfo}  setLoginStatus = {this.props.setLoginStatus} 
