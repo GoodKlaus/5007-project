@@ -55,7 +55,7 @@ export default class Summary extends React.Component {
     }
 
     async updateTime(){
-        if(!this.props.isLogined) {
+        if(this.props.isLogined === false) {
             alert("You have not logged in, please log in before procedding!");
         } else {
             const query = `mutation userTimeChange($changes: TimeChangeInputs!) {
