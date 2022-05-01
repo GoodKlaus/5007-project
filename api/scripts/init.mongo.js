@@ -98,3 +98,11 @@ db.users.createIndex({ id: 1 }, { unique: true });
 db.users.createIndex({ name: 1 });
 db.users.createIndex({ price: 1 });
 db.users.createIndex({ created: 1 });
+
+db.userorder.remove({});
+const count3 = db.userorder.count();
+print('Inserted', count3, 'orders');
+
+db.counters.remove({ _id: 'orders' });
+db.counters.insert({ _id: 'orders', current: count3 });
+db.userorder.createIndex({ created: 1 }, { unique: true });
