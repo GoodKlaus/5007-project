@@ -89,7 +89,7 @@ function Submission(props) {
         }
         console.log(selectionOK);
         if(!selectionOK){
-            // alert("Your selection either exceeds owner's available time range or overlap booked timing, please select again");
+            alert("Your selection either exceeds owner's available time range or overlap booked timing, please select again");
             refresh(history, location);
         }
     }
