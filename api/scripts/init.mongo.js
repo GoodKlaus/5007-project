@@ -1,3 +1,4 @@
+// Create collection targets to store users' target location from Home page
 db.targets.remove({});
 
 const count = db.targets.count();
@@ -6,9 +7,8 @@ print('Inserted', count, 'targets');
 db.counters.remove({ _id: 'targets' });
 db.counters.insert({ _id: 'targets', current: count });
 
+// Create collection users to store information of users without charging piles
 db.users.remove({});
-db.usercharger.remove({});
-
 const usersDB = [
   {
     id: 1,
@@ -29,6 +29,21 @@ const usersDB = [
     isOwnerOfEVCharger: false,
   },
 ];
+
+db.users.insertMany(usersDB);
+const count1 = db.users.count();
+print('Inserted', count1, 'users');
+
+db.counters.remove({ _id: 'users' });
+db.counters.insert({ _id: 'users', current: count1 });
+
+db.users.createIndex({ id: 1 }, { unique: true });
+db.users.createIndex({ name: 1 });
+db.users.createIndex({ price: 1 });
+db.users.createIndex({ created: 1 });
+
+// Create collection usercharger to store information of users with charging piles
+db.usercharger.remove({});
 const userchargerDB = [
   {
     id: 1,
@@ -80,25 +95,14 @@ const userchargerDB = [
   },
 ];
 
-db.users.insertMany(usersDB);
-const count1 = db.users.count();
-print('Inserted', count1, 'users');
-
 db.usercharger.insertMany(userchargerDB);
 const count2 = db.usercharger.count();
 print('Inserted', count2, 'users with charger');
 
-db.counters.remove({ _id: 'users' });
-db.counters.insert({ _id: 'users', current: count1 });
-
 db.counters.remove({ _id: 'usercharger' });
 db.counters.insert({ _id: 'usercharger', current: count2 });
 
-db.users.createIndex({ id: 1 }, { unique: true });
-db.users.createIndex({ name: 1 });
-db.users.createIndex({ price: 1 });
-db.users.createIndex({ created: 1 });
-
+// Create collection userorder to store information of users' orders
 db.userorder.remove({});
 const count3 = db.userorder.count();
 print('Inserted', count3, 'orders');

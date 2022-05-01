@@ -9,18 +9,29 @@ const target = require('./target.js');
 
 const resolvers = {
   Query: {
+    //query about message
     about: about.getMessage,
+    //query information of users without charging piles
     getUser: user.getUser,
+    //query information of users with charging piles
     getUserCharger: user.getUserCharger,
+    //query target location searched at Home page
     resultTarget: target.result,
+    //query all of the information of users with charging pile and update each user's timetable
     userChargerList: user.result,
+    //query all of the orders of one targeted user
     userOrderList: user.order_result,
   },
   Mutation: {
+    //set about message
     setAboutMessage: about.setMessage,
+    //add new user without charging pile
     registerNewUser: user.registerNewUser,
+    //add new user with charging pile
     registerNewUserCharger: user.registerNewUserCharger,
+    //add target location from Home page
     targetAdd: target.add,
+    //add new order of certain user and update the timetable from corresponding user
     userTimeOrder: user.combo_add,
   },
   GraphQLDate,
