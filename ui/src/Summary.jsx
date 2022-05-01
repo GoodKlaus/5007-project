@@ -6,6 +6,10 @@ import ICalendarLink from "react-icalendar-link";
 import graphQLFetch from './graphQLFetch.js'
 
 var id = 0;
+var address_order = " ";
+var price = 0;
+var time_order = " ";
+var cost_order = 0;
 var day_ind = 0;
 var start = "9:30";
 var inter = 0; 
@@ -20,6 +24,10 @@ function BookingSum() {
     const days_index = parseInt(location.state.days_index);
 
     id = ind+1;
+    address_order = location.state.address;
+    price = location.state.price;
+    time_order = time_start + ' - ' + time_end + ' ' + location.state.date;
+    cost_order = cost;
     day_ind = days_index;
     start = time_start;
     inter = parseInt(duration);
@@ -93,16 +101,16 @@ export default class Summary extends React.Component {
         if(this.props.isLogined === false) {
             alert("You have not logged in, please log in before procedding!");
         } else {
-            const query = `mutation userTimeChange($changes: TimeChangeInputs!) {
-                userTimeChange(changes: $changes) {
+            const query = `mutation userTimeOrder($combo: comboInputs!) {
+                userTimeOrder(combo: $combo) {
                     id
                 }
             }`
-
-            const changes = {id: id, days_index: day_ind, selectedTime: start, duration: inter};
-            const data = await graphQLFetch(query, { changes });
+            const combo = {id: id, days_index: day_ind, selectedTime: start, duration: inter, name: this.props.LoginedUser.name, email: this.props.LoginedUser.email, phoneNumber: this.props.LoginedUser.phoneNumber, address: address_order, price: price, time: time_order, cost: cost_order};
+            const data = await graphQLFetch(query, { combo });
             if (data) {
-                console.log("Successful");
+                console.log("Successfully change time table");
+                alert("Your booking is successful!");
             }
         }
         
