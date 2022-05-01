@@ -1,6 +1,10 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
 import { Route } from 'react-router-dom';
+
+/*
+* About Us Page conponent 
+*/
 export default class AboutUs extends React.Component {
     render() {
         return (

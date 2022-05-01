@@ -6,6 +6,10 @@ import Geocode from "react-geocode";
 Geocode.setApiKey('AIzaSyBKEEQ4HcGDKPwClXap5h9Cjqf7S2yfp9o');
 Geocode.enableDebug();
 
+/*
+* Register Page
+* add new user registering infomation to db according to the category
+*/
 export default class Register extends React.Component {
     constructor(){
         super();

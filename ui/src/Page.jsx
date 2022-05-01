@@ -4,6 +4,9 @@ import { withRouter, NavLink } from 'react-router-dom';
 import Content from './Content.jsx';
 import graphQLFetch from './graphQLFetch.js';
 
+/*
+* navigation bar: it will switch according login status
+*/
 class NavBar extends React.Component {
   render() {
     if(this.props.isLogined){
@@ -141,6 +144,7 @@ export default class Page extends React.Component {
     }
   }
 
+  //add infomation of new user with charging pile
   async addNewUserCharger(userChargerInput) {
     const query = `mutation registerNewUserCharger ($userChargerInput:userChargerRegisterInput!){
         registerNewUserCharger(userChargerInput:$userChargerInput){

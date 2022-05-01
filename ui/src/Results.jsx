@@ -26,6 +26,10 @@ function Result(props) {
   );
 }
 
+/*
+* Result Page
+* show the searching result of nearby charging piles according location 
+*/
 export default class Results extends React.Component {
   constructor() {
     super();

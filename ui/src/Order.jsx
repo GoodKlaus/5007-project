@@ -5,6 +5,9 @@ import { Route } from 'react-router-dom';
 
 import graphQLFetch from './graphQLFetch.js'
 
+/*
+* Order Page
+*/
 export default class OrderDisplay extends React.Component {
     constructor(){
         super();

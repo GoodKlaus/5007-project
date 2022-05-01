@@ -57,6 +57,7 @@ function BookingSum() {
     );
 }
 
+// create calender according to the summary information(start time, end time, location...)
 function AddEventToCalender() {
     let location = useLocation();
     var time_start = location.state.timing;
@@ -89,7 +90,11 @@ function AddEventToCalender() {
 
 
 
-
+/*
+* Summary Page
+* show order summary information
+* coupon codes input, "add to calendar", and "process to pay" button   
+*/
 export default class Summary extends React.Component {
     constructor() {
         super();

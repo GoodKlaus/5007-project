@@ -5,6 +5,10 @@ import graphQLFetch from './graphQLFetch.js';
 
 // import URLSearchParams from 'url-search-params';
 import { Route } from 'react-router-dom';
+
+/*
+* login page: user can use password and email/phone number to log in.
+*/
 export default class Login extends React.Component {
     constructor(){
         super();
@@ -16,8 +20,12 @@ export default class Login extends React.Component {
         const emialOrPhone = form.EmailOrTelephone.value;
         const password = form.Password.value;
         let loginInfo = [];
+
+        // formal email format validation eg. lili@u.nus.edu 
         if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emialOrPhone)){
             loginInfo = {email:emialOrPhone,password:password}
+        
+        // 8-digit phone number validation 
         }else if(/^\d{8}$/.test(emialOrPhone)){
             loginInfo = {phoneNumber:emialOrPhone,password:password}
         }else{

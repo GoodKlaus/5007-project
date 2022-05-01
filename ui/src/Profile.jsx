@@ -1,6 +1,10 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
 import { Route } from 'react-router-dom';
+
+/*
+* Profile page: check the login status, if logged in, show the user information
+*/
 export default class Register extends React.Component {
     constructor(){
         super();

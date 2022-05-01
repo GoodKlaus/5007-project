@@ -15,6 +15,10 @@ import OrderDisplay from './Order.jsx';
 
 const NotFound = () => <h1>Page Not Found</h1>;
 
+/*
+* main content part of the website page
+* use router to realize the page switching
+*/
 export default class Content extends React.Component {
   render(){
     return (

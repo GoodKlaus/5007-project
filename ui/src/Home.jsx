@@ -21,6 +21,10 @@ function ResultMap() {
         <button type="submit" onClick={handlePush} className="searchButton">Search</button>
     );
 }
+
+/*
+* SearchMap conponent: get location value by input box, show relative places, wait for user selection.
+*/
 class SearchMap extends React.Component {
     constructor(props) {
         super(props);
@@ -248,6 +252,10 @@ class SearchMap extends React.Component {
 		return( map )
 	}
 }
+
+/*
+* Home page conponent : includes map and input box for searching location
+*/
 
 export default class Home extends Component {
     render() {

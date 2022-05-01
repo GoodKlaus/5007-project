@@ -106,6 +106,10 @@ function refresh(hist, loc) {
     })
 }
 
+/*
+* show the pile information specifically (address,available time, charging duration) 
+* when user selects relative information, the showing info update as well
+*/
 export default class InfoDetail extends React.Component {
     constructor() {
         super();
