@@ -39,30 +39,30 @@ export default class OrderDisplay extends React.Component {
             return(
                 <React.Fragment>
                     <h2 style={{textAlign: "center"}}>Your Orders</h2>
+                    {orders.map(order => 
                     <Table hover className="table_sum">
                         <tbody>
                             <tr>
                                 <th scope="row">Address</th>
-                                { orders.map( row =>
-                                <td>{row.address}</td>)}
-                            </tr>
+                                <td>{order.address}</td>
+                            </tr>  
                             <tr>
                                 <th scope="row">Price</th>
-                                { orders.map( row =>
-                                <td>S$ {row.price}/hour</td>)}
+                                <td>S$ {order.price}/hour</td>
                             </tr>
                             <tr>
                                 <th scope="row">Time</th>
-                                { orders.map( row =>
-                                <td>{row.time}</td>)}
+                                <td>{order.time}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Cost</th>
-                                { orders.map( row =>
-                                <td>S$ {row.cost}</td>)}
+                                <td>S$ {order.cost}</td>
                             </tr>
                         </tbody>
                     </Table>
+                    )
+                    }
+                    
                 </React.Fragment>
             );
         } else {

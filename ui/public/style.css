@@ -149,6 +149,7 @@ Button:hover {
 .table_sum {
     width: 400px;
     margin: auto;
+    margin-bottom: 50px;
     background-color: #d9d9f8a6;
 }
 .table_sum th {
