@@ -14,13 +14,14 @@ const resolvers = {
     getUserCharger: user.getUserCharger,
     resultTarget: target.result,
     userChargerList: user.result,
+    userOrderList: user.order_result,
   },
   Mutation: {
     setAboutMessage: about.setMessage,
     registerNewUser: user.registerNewUser,
     registerNewUserCharger: user.registerNewUserCharger,
     targetAdd: target.add,
-    userTimeChange: user.change,
+    userTimeOrder: user.combo_add,
   },
   GraphQLDate,
 };
