@@ -37,17 +37,23 @@ type Target {
     lon: Float!
 }
 
+type userOrder {
+  _id: ID!
+  id: Int!
+  name: String!
+  email: String!
+  phoneNumber:String!
+  address: String!
+  price: Float!
+  time: String!
+  cost: Float!
+  created: GraphQLDate!
+}
+
 input TargetInputs {
   address: String!
   lat: Float!
   lon: Float!
-}
-
-input TimeChangeInputs {
-  id: Int!
-  days_index: Int!
-  selectedTime: String!
-  duration: Int!
 }
 
 input userChargerRegisterInput {
@@ -78,6 +84,26 @@ input userLoginInput {
   password: String!,
 }
 
+input userOrderCheck {
+  name: String!
+  email: String!
+  phoneNumber:String!
+}
+
+input comboInputs {
+  id: Int!
+  days_index: Int!
+  selectedTime: String!
+  duration: Int!
+  name: String!
+  email: String!
+  phoneNumber:String!
+  address: String!
+  price: Float!
+  time: String!
+  cost: Float!
+}
+
 ##### Top level declarations
 type Query {
   about: String!
@@ -85,11 +111,12 @@ type Query {
   getUserCharger(userInput:userLoginInput!): userCharger
   resultTarget: Target!
   userChargerList: [userCharger!]!
+  userOrderList(userInfo:userOrderCheck!): [userOrder!]!
 }
 type Mutation {
   setAboutMessage(message: String!): String
   registerNewUser(userInput: userRegisterInput!): user
   registerNewUserCharger(userChargerInput: userChargerRegisterInput!): userCharger
   targetAdd(target: TargetInputs!): Target!
-  userTimeChange(changes: TimeChangeInputs!): userCharger!
+  userTimeOrder(combo: comboInputs!): userCharger!
 }
