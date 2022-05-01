@@ -10,6 +10,8 @@ import AboutUs from './AboutUs.jsx';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import Profile from './Profile.jsx';
+import OrderDisplay from './Order.jsx';
+
 
 const NotFound = () => <h1>Page Not Found</h1>;
 
@@ -21,7 +23,7 @@ export default class Content extends React.Component {
         <Route path="/home" component={Home} />
         <Route path="/results" component={Results} />
         <Route path="/info" component={InfoDetail} />
-        <Route path="/summary" render={(props) => <Summary {...props} isLogined = {this.props.isLogined}/>}/>
+        <Route path="/summary" render={(props) => <Summary {...props} isLogined = {this.props.isLogined} LoginedUser = {this.props.LoginedUser}/>}/>
         <Route path="/aboutUs" component={AboutUs} />
         <Route path="/login"  render={(props) => <Login {...props} isLogined = {this.props.isLogined} 
               setLoginInfo = {this.props.setLoginInfo}  setLoginStatus = {this.props.setLoginStatus} 
@@ -34,6 +36,7 @@ export default class Content extends React.Component {
         <Route path="/profile" render={(props) => <Profile {...props} LoginedUser = {this.props.LoginedUser}
               isLogined = {this.props.isLogined} setLoginStatus = {this.props.setLoginStatus}
                clearLoginedUserInfo = {this.props.clearLoginedUserInfo}/>} />
+        <Route path="/order" render={(props) => <OrderDisplay {...props} LoginedUser = {this.props.LoginedUser} />} />
         <Route component={NotFound} />
       </Switch>
     );
