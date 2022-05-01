@@ -61,3 +61,7 @@ cd api
 node server.js
 ```
 
+### Notes:
+1. Because we utilized useLocation to pass props between pages, please do not use go back function of browser, or our website would collaspse.
+2. Regarding the time table at Detailed Information page, the last timing represents the end time that users provided. Therefore, please do not select the last timing for your booking.
+3. At Register page, if you represent a user with charging pile, please key in correct-format address that can be used to extract latitude and longitude information (e.g. Singapore zoo, 31 Jurong East Avenue)
