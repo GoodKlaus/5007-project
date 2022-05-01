@@ -163,18 +163,43 @@ async function result() {
   return users_lst1;
 }
 
-async function change(_, { changes }) {
-    const db = getDb();
-    const user = await db.collection('usercharger').findOne({id: changes.id});
-    var timeTable = user.availableTimeTable;
-    var temp = timeTable[changes.days_index];
-    const findTimeIndex = (element) => element == changes.selectedTime;
-    const ind = temp.findIndex(findTimeIndex);
-    temp.splice(ind, changes.duration);
-    timeTable[changes.days_index] = temp;
-    db.collection('usercharger').updateOne({id: changes.id}, {$set: {availableTimeTable: timeTable}});
-    const user_new = await db.collection('usercharger').findOne({id: changes.id});
-    return user_new;
+async function order_result(_, { userInfo }) {
+  const db = getDb();
+  const user_orders = await db.collection('userorder').find({name: userInfo.name, email: userInfo.email, phoneNumber: userInfo.phoneNumber}).toArray();
+  return user_orders;
 }
 
-module.exports = { getUser, getUserCharger,registerNewUser, registerNewUserCharger, result, change };
+
+async function combo_add (_, {combo}){
+  const db = getDb();
+  const user = await db.collection('usercharger').findOne({id: combo.id});
+  var timeTable = user.availableTimeTable;
+  var temp = timeTable[combo.days_index];
+  const findTimeIndex = (element) => element == combo.selectedTime;
+  const ind = temp.findIndex(findTimeIndex);
+  temp.splice(ind, combo.duration);
+  timeTable[combo.days_index] = temp;
+  db.collection('usercharger').updateOne({id: combo.id}, {$set: {availableTimeTable: timeTable}});
+  const user_new = await db.collection('usercharger').findOne({id: combo.id});
+
+  const new_order = Object.assign({}, combo);
+  delete new_order['id'];
+  delete new_order['days_index'];
+  delete new_order['selectedTime'];
+  delete new_order['duration'];
+  new_order.created = new Date();
+  new_order.id = await getNextSequence('orders');
+
+  const result = await db.collection('userorder').insertOne(new_order);
+  const savedOrder = await db.collection('userorder')
+    .findOne({ _id: result.insertedId });
+  
+  if (savedOrder) {
+    console.log("Successfully add order");
+    console.log(savedOrder);
+  }
+
+  return user_new;
+}
+
+module.exports = { getUser, getUserCharger,registerNewUser, registerNewUserCharger, result, order_result, combo_add };
